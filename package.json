@@ -1,0 +1,23 @@
+{
+  "name": "key-forge",
+  "version": "0.0.1",
+  "description": "A simple random key generator for use with Node.",
+  "main": "index.coffee",
+  "scripts": {
+    "test": "coffee test.coffee"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pandastrike/key-forge.git"
+  },
+  "keywords": [
+    "key",
+    "random",
+    "bytes",
+    "generate"
+  ],
+  "author": "Dan Yoder",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "b7fc37fec30296c2203e791ecf379b19787b3b8e"
+}
