@@ -19,5 +19,8 @@
   "author": "Dan Yoder",
   "license": "MIT",
   "readmeFilename": "README.md",
-  "gitHead": "b7fc37fec30296c2203e791ecf379b19787b3b8e"
+  "gitHead": "b7fc37fec30296c2203e791ecf379b19787b3b8e",
+  "devDependencies": {
+    "testify": "~0.2.7"
+  }
 }

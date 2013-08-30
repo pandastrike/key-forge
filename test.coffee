@@ -1,26 +1,25 @@
-Keys = require "../src/keys"
-testify = require("./testify")
+Keys = require "./index"
+Testify = require("testify")
+assert = require "assert"
 
-testify "Key generation", (test) ->
+Testify.test "Key generation", (context) ->
 
-  # Make sure randomKey returns a string ...
-  test.assert.ok (Keys.randomKey 16).charAt
+  context.test "randomKey returns a string", ->
+    assert.ok (Keys.randomKey 16).charAt
 
-  # Make sure the numberToBytes function works ...
-  x = Date.now()
-  test.assert.equal (Keys.bytesToNumber Keys.numberToBytes x), x
-  x = 17
-  test.assert.equal (Keys.bytesToNumber Keys.numberToBytes x), x
+  context.test "bytesToNumber is the inverse of numberToBytes", ->
+    x = Date.now()
+    assert.ok (Keys.bytesToNumber Keys.numberToBytes x), x
+    x = 17
+    assert.equal (Keys.bytesToNumber Keys.numberToBytes x), x
 
-  # Make sure numberToKey returns a string ...
-  test.assert.ok (Keys.numberToKey Date.now()).charAt
+  context.test "numberToKey returns a string", ->
+    assert.ok (Keys.numberToKey Date.now()).charAt
   
   z = Keys.buffersToKey Keys.randomBytes(16), Keys.numberToBytes Date.now()
 
-  # Make sure we can combine byte arrays
-  test.assert.ok z.charAt
+  context.test "we can combine byte arrays to create composite keys", ->
+    assert.ok z.charAt
 
-  # Double-check the encoding ...
-  test.assert.equal z, (new Buffer z, 'base64').toString('base64')
-  
-  test.done()
+  context.test "Encoding for base64 works as expected", ->
+    assert.equal z, (new Buffer z, 'base64').toString('base64')
