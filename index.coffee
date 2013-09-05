@@ -3,8 +3,8 @@ Buffer = (require "buffer").Buffer
 
 Keys = 
   
-  randomKey: (size) -> 
-    Keys.bufferToKey Keys.randomBytes size
+  randomKey: (size, isUrlSafe = true) -> 
+    Keys.bufferToKey( Keys.randomBytes( size ), isUrlSafe)
     
   randomBytes: (size) ->
     Crypto.randomBytes size
@@ -43,7 +43,11 @@ Keys =
       x += byte
     x
         
-  bufferToKey: (buffer) -> buffer.toString('base64')
+  bufferToKey: (buffer, isUrlSafe = true) ->
+    if isUrlSafe
+      buffer.toString('hex')
+    else
+      buffer.toString('base64')
   
   buffersToKey: (buffers...) -> Keys.bufferToKey Buffer.concat buffers
 

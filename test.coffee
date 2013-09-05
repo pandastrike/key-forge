@@ -21,5 +21,5 @@ Testify.test "Key generation", (context) ->
   context.test "we can combine byte arrays to create composite keys", ->
     assert.ok z.charAt
 
-  context.test "Encoding for base64 works as expected", ->
-    assert.equal z, (new Buffer z, 'base64').toString('base64')
+  context.test "Encoding for hex works as expected", ->
+    assert.equal z, (new Buffer z, 'hex').toString('hex')
