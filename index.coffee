@@ -1,16 +1,16 @@
 Crypto = require "crypto"
 Buffer = (require "buffer").Buffer
 
-Keys = 
+Keys =
   
-  randomKey: (size, isUrlSafe = true) -> 
-    Keys.bufferToKey( Keys.randomBytes( size ), isUrlSafe)
+  randomKey: (size, format="hex") ->
+    Keys.bufferToKey( Keys.randomBytes( size ), format)
     
   randomBytes: (size) ->
     Crypto.randomBytes size
   
   numberToKey: (number) ->
-    Keys.bufferToKey Keys.numberToBytes number  
+    Keys.bufferToKey Keys.numberToBytes number
 
   # We don't use, say, writeDoubleBE because I'm leery about hard-coding the
   # size of a double, given that buffers deal in raw memory. 
@@ -35,20 +35,36 @@ Keys =
     
   # This function is primarily here to make it easy to test the numberToBytes
   # function. The Buffer object works just like an array so you can pass in
-  # either a Buffer instance or an array here.  
-  bytesToNumber: (bytes) ->   
+  # either a Buffer instance or an array here.
+  bytesToNumber: (bytes) ->
     x = 0
     for byte in bytes
       x *= 256
       x += byte
     x
         
-  bufferToKey: (buffer, isUrlSafe = true) ->
-    if isUrlSafe
-      buffer.toString('hex')
-    else
-      buffer.toString('base64')
+  bufferToKey: (buffer, format="hex") ->
+    switch format
+      when "hex"
+        buffer.toString("hex")
+      when "base64"
+        # Omitting padding characters, per:
+        # http://tools.ietf.org/html/rfc4648#section-3.2
+        buffer.toString("base64").replace(/\=+$/, '')
+      when "base64url"
+        Keys.sanitize(buffer.toString("base64"))
+      else
+        throw new Error "Unknown format: '#{format}'"
+
   
+  sanitize: (string) ->
+    # Based on RFC 4648's "base64url" mapping:
+    # http://tools.ietf.org/html/rfc4648#section-5
+    string.replace(/\+/g, '-')
+      .replace(/\//g, '_')
+      .replace(/\=+$/, '')
+
+
   buffersToKey: (buffers...) -> Keys.bufferToKey Buffer.concat buffers
 
 
