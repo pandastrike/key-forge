@@ -1,11 +1,13 @@
 {
   "name": "key-forge",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "A simple random key generator for use with Node.",
   "main": "index.coffee",
   "scripts": {
+    "prepublish": "coffee -o lib/ -c src/*.coffee",
     "test": "coffee test.coffee"
   },
+  "bin": "bin/key-forge",
   "repository": {
     "type": "git",
     "url": "git://github.com/pandastrike/key-forge.git"
@@ -21,6 +23,7 @@
   "readmeFilename": "README.md",
   "gitHead": "b7fc37fec30296c2203e791ecf379b19787b3b8e",
   "devDependencies": {
+    "coffee-script": "~1.6.3",
     "testify": "~0.2.7"
   }
 }
