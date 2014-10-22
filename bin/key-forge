@@ -1,3 +1,19 @@
 #!/usr/bin/env coffee
-Keys = require "../index"
-console.log Keys.randomKey(16)
+{randomKey} = require "../lib/index"
+[size, format] = process.argv[2..]
+size ?= 16
+format ?= "base64url"
+try
+  console.log randomKey parseInt(size), format
+catch error
+  console.error """
+    Usage: key-forge <size> <format>
+
+    Generate a random key of the given lenght in the given
+    format. The <size> argument defaults to 16 and the
+    <format> argument defaults to base64url.
+
+    Other valid formats: hex, base64.
+
+    """
+  process.exit -1
